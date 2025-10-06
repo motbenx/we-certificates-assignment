@@ -7,8 +7,8 @@
       <button
         class="navbar-toggler"
         type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
+        data-bs-toggle="collapse"
+        data-bs-target=".navbar-collapse"
         aria-label="Toggle navigation"
         [attr.aria-expanded]="isExpanded"
         (click)="toggle()"
@@ -19,7 +19,35 @@
         class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
         [ngClass]="{ show: isExpanded }"
       >
-        <ul class="navbar-nav flex-grow"></ul>
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+              Certificates
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['/claims']" routerLinkActive="active">
+              Claims
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" [routerLink]="['/pricing-plans']" routerLinkActive="active">
+              Pricing Plans
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" role="button" 
+               (click)="toggleReportsDropdown(); $event.preventDefault()" 
+               [attr.aria-expanded]="isReportsDropdownOpen"
+               style="cursor: pointer;">
+              Reports
+            </a>
+            <ul class="dropdown-menu" [ngClass]="{'show': isReportsDropdownOpen}" aria-labelledby="reportsDropdown">
+              <li><a class="dropdown-item" [routerLink]="['/reports/sales']" routerLinkActive="active" (click)="closeReportsDropdown()">Sales Reports</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/reports/claims']" routerLinkActive="active" (click)="closeReportsDropdown()">Claims Reports</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>

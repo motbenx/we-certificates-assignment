@@ -16,3 +16,20 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+/* Custom dropdown styles */
+.dropdown-menu {
+  display: none;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-toggle:hover {
+  text-decoration: none;
+}

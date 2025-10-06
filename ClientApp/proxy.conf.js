@@ -7,6 +7,7 @@ const PROXY_CONFIG = [
   {
     context: [
       "/certificates",
+      "/PricingPlans",
    ],
     target: target,
     secure: false,
