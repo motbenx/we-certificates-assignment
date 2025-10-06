@@ -1,5 +1,6 @@
 using InsuranceCertificates.Data;
 using InsuranceCertificates.Domain;
+using InsuranceCertificates.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("database"));
+
+// Register validation service
+builder.Services.AddScoped<CertificateValidationService>();
 
 var app = builder.Build();
 
@@ -40,20 +44,27 @@ void FeedCertificates(IServiceProvider provider)
 {
     using var scope = provider.CreateScope();
     var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var validationService = scope.ServiceProvider.GetRequiredService<CertificateValidationService>();
+
+    // Clear existing certificates to ensure fresh mock data
+    appDbContext.Certificates.RemoveRange(appDbContext.Certificates);
+    
+    var creationDate = DateTime.UtcNow;
+    var (validFrom, validTo) = validationService.CalculateValidityDates(creationDate);
 
     appDbContext.Certificates.Add(new Certificate()
     {
-        Number = "1",
-        CreationDate = DateTime.UtcNow,
-        ValidFrom = DateTime.UtcNow,
-        ValidTo = DateTime.UtcNow.AddYears(1),
-        CertificateSum = 200,
-        InsuredItem = "Apple Iphone 14 PRO",
-        InsuredSum = 999,
+        Number = "00001",
+        CreationDate = creationDate,
+        ValidFrom = validFrom,
+        ValidTo = validTo,
+        CertificateSum = 25,
+        InsuredItem = "Apple iPhone 14 PRO",
+        InsuredSum = 150,
         Customer = new Customer()
         {
             Name = "Customer 1",
-            DateOfBirth = new DateTime(2000, 1, 1)
+            DateOfBirth = new DateTime(1990, 1, 1)
         }
     });
 

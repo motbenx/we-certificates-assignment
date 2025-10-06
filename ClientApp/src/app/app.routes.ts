@@ -8,6 +8,7 @@ import { ClaimsReportsComponent } from './reports/claims-reports/claims-reports.
 
 export const appRoutes: Routes = [
   { path: '', component: CertificatesComponent, pathMatch: 'full' },
+  { path: 'certificates', component: CertificatesComponent },
   { path: 'new-certificate', component: NewCertificateComponent },
   { path: 'claims', component: ClaimsComponent },
   { path: 'pricing-plans', component: PricingPlansComponent },

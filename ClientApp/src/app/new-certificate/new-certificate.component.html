@@ -1,5 +1,17 @@
 <h1>New insurance certificate</h1>
 
+<!-- Success Message -->
+<div *ngIf="successMessage" class="alert alert-success" role="alert">
+  {{ successMessage }}
+</div>
+
+<!-- Validation Errors -->
+<div *ngIf="validationErrors.length > 0" class="alert alert-danger" role="alert">
+  <ul class="mb-0">
+    <li *ngFor="let error of validationErrors">{{ error }}</li>
+  </ul>
+</div>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="mb-3">
     <label class="form-label">Customer name</label>
@@ -17,5 +29,11 @@
     <label class="form-label">Insured sum</label>
     <input type="number" class="form-control" formControlName="insuredSum">
   </div>
-  <button type="submit" class="btn btn-primary">Create</button>
+  <button 
+    type="submit" 
+    class="btn btn-primary"
+    [disabled]="isSubmitting || form.invalid">
+    <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2" role="status"></span>
+    {{ isSubmitting ? 'Creating...' : 'Create' }}
+  </button>
 </form>
